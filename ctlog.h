@@ -1,3 +1,6 @@
+#ifndef __CTLOG_H__
+#define __CTLOG_H__
+
 #include <iostream>
 #include <type_traits>
 
@@ -54,25 +57,25 @@ struct CTLog {
 		// operator << (and its overloads) in case the log level is lower.
 		// These should be removed in compile time.
 		template<typename Q, typename U = L>
-		typename std::enable_if< U::value < T::value, CTLogLevel<U> >::type&
+		typename std::enable_if< not (U::value >= T::value), CTLogLevel<U> >::type&
 		operator << (const Q& x) {
   			return *this;
 		}
 		
 		template<typename U = L>
-		typename std::enable_if< U::value < T::value, CTLogLevel<U> >::type&
+		typename std::enable_if< not (U::value >= T::value), CTLogLevel<U> >::type&
 		operator << (std::ostream& (*f)(std::ostream &)) {
   			return *this;
 		}
 
 		template<typename U = L>
-		typename std::enable_if< U::value < T::value, CTLogLevel<U> >::type&
+		typename std::enable_if< not (U::value >= T::value), CTLogLevel<U> >::type&
 		operator << (std::ostream& (*f)(std::ios &)) {
   			return *this;
 		}
 
 		template<typename U = L>
-		typename std::enable_if< U::value < T::value, CTLogLevel<U> >::type&
+		typename std::enable_if< not (U::value >= T::value), CTLogLevel<U> >::type&
 		operator << (std::ostream& (*f)(std::ios_base &)) {
   			return *this;
 		}
@@ -84,3 +87,5 @@ struct CTLog {
 	CTLogLevel<WarningLogLevel> warning;
 	CTLogLevel<ErrorLogLevel> error;
 };
+
+#endif // __CTLOG_H__
