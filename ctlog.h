@@ -20,37 +20,46 @@ typedef std::integral_constant<int, ErrorLogLevelEnum> ErrorLogLevel;
 // Compile time log.
 template<typename T>
 struct CTLog {
-	template<typename L>
+	// C'tor
+	CTLog(std::ostream& stream) :
+		debug(stream),
+		info(stream),
+		warning(stream),
+		error(stream) { }
 	
 	// Inner struct that defines the operator << for a specific log level 
 	// in compile time.
+	template<typename L>
 	struct CTLogLevel {
+		// C'tor
+		CTLogLevel(std::ostream& stream) : stream_(stream) { }
+
 		// operator << (and its overloads) in case the log level is higher.
 		template<typename Q, typename U = L>
 		typename std::enable_if< U::value >= T::value, CTLogLevel<U> >::type&
 		operator << (const Q& x) {
-			std::cout << x;
+			stream_ << x;
   			return *this;
 		}
 
 		template<typename U = L>
 		typename std::enable_if< U::value >= T::value, CTLogLevel<U> >::type&
 		operator << (std::ostream& (*f)(std::ostream &)) {
-			f(std::cout);
+			f(stream_);
   			return *this;
 		}
 
 		template<typename U = L>
 		typename std::enable_if< U::value >= T::value, CTLogLevel<U> >::type&
 		operator << (std::ostream& (*f)(std::ios &)) {
-			f(std::cout);
+			f(stream_);
   			return *this;
 		}
 
 		template<typename U = L>
 		typename std::enable_if< U::value >= T::value, CTLogLevel<U> >::type&
 		operator << (std::ostream& (*f)(std::ios_base &)) {
-			f(std::cout);
+			f(stream_);
   			return *this;
 		}
 	
@@ -79,6 +88,8 @@ struct CTLog {
 		operator << (std::ostream& (*f)(std::ios_base &)) {
   			return *this;
 		}
+		private:
+		std::ostream& stream_; // The output stream of the log
 	};
 
 	// The specific logs members.

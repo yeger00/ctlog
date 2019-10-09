@@ -5,7 +5,7 @@
 template <typename T>
 void test_function() {
 	std::cout << "Starting log level: " << T::value << std::endl;
-	CTLog<T> ctlog;
+	CTLog<T> ctlog(std::cout);
 	ctlog.debug << "debug" << std::endl;
 	ctlog.info<< "info" << std::endl;
 	ctlog.warning << "warning" << std::endl;

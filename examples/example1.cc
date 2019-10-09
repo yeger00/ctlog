@@ -1,6 +1,7 @@
 #include "ctlog.h"
+#include <iostream>
 
-CTLog<InfoLogLevel> log;
+CTLog<InfoLogLevel> log(std::cout);
 
 int main() {
         log.debug << "You won't see this message because debug < info" << std::endl;
