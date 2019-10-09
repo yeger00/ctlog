@@ -67,25 +67,25 @@ struct CTLog {
 		// These should be removed in compile time.
 		template<typename Q, typename U = L>
 		typename std::enable_if< not (U::value >= T::value), CTLogLevel<U> >::type&
-		operator << (const Q& x) {
+		operator << (const Q&) {
   			return *this;
 		}
 		
 		template<typename U = L>
 		typename std::enable_if< not (U::value >= T::value), CTLogLevel<U> >::type&
-		operator << (std::ostream& (*f)(std::ostream &)) {
+		operator << (std::ostream& (*)(std::ostream &)) {
   			return *this;
 		}
 
 		template<typename U = L>
 		typename std::enable_if< not (U::value >= T::value), CTLogLevel<U> >::type&
-		operator << (std::ostream& (*f)(std::ios &)) {
+		operator << (std::ostream& (*)(std::ios &)) {
   			return *this;
 		}
 
 		template<typename U = L>
 		typename std::enable_if< not (U::value >= T::value), CTLogLevel<U> >::type&
-		operator << (std::ostream& (*f)(std::ios_base &)) {
+		operator << (std::ostream& (*)(std::ios_base &)) {
   			return *this;
 		}
 		private:

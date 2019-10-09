@@ -1,14 +1,16 @@
 # CTLog
 Compile Time Log in C++
 
+
 ## Getting started
 Include the `ctlog.h` header file, and create a CTLog object with a given level.
 Only log messages with higher level will be compiled.
-In the `examples` directory you can see the following example:
+For example:
 ```
 #include "ctlog.h"
+#include <iostream>
 
-CTLog<InfoLogLevel> log;
+CTLog<InfoLogLevel> log(std::cout);
 
 int main() {
 	log.debug << "You won't see this message because debug < info" << std::endl;
@@ -18,7 +20,7 @@ int main() {
 
 You can compile it with:
 ```
-g++ -O3 -I. examples/example1.cc -o example1
+g++ -O3 -I/path/to/ctlog/include /path/to/example1.cc -o example1
 ```
 
 When running, only the second messasge is shown:
@@ -32,9 +34,15 @@ When running strings, only the second message exists:
 $ strings example1 | grep because
 You will  see this message because error > info
 ```
+This example can also be found in the `./examples` directory.
 
 
-The second example defines all the `CTLog`s, and calls each log function.
+## Compiling the examples
+You can compile the examples with cmake:
 ```
-g++ -O3 -I. examples/example2.cc -o example2
+mkdir build
+cd build
+cmake ..
+make
 ```
+Then all the compiled examples will be in the `build/examples` directory.
