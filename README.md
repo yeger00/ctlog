@@ -46,3 +46,13 @@ cmake ..
 make
 ```
 Then all the compiled examples will be in the `build/examples` directory.
+
+## Compiling the tests
+The tests are using the [catch2](https://github.com/catchorg/Catch2) library. After installing [it](https://github.com/catchorg/Catch2/blob/master/docs/cmake-integration.md#installing-catch2-from-git-repository), you can compile the tests with cmake:
+```
+mkdir build
+cd build
+cmake .. -DBUILD_TESTING=ON
+make
+ctest
+```

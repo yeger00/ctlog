@@ -9,4 +9,8 @@ target_include_directories(CTLog
 )
 
 add_subdirectory(examples)
+
+if(BUILD_TESTING)
+enable_testing()
 add_subdirectory(tests)
+endif()
